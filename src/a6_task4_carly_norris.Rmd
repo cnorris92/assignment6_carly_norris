@@ -1,7 +1,6 @@
 ---
-title: "Task 4"
+title: "Mono Lake Levels"
 author: "Carly Norris"
-date: "12/6/2020"
 output: html_document
 ---
 
@@ -44,6 +43,8 @@ lake_mono <- read_csv(here("data", "mono_lake_annual_levels.csv"), skip = 5) %>%
   
 
 ```
+**Figure 1:** ADD CAPTION
+
 
 Lines to add: 3692 stable level salt concentrations, salty shrimp level
 
