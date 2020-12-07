@@ -1,0 +1,59 @@
+---
+title: "Task 4"
+author: "Carly Norris"
+date: "12/6/2020"
+output: html_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(here)
+library(janitor)
+```
+
+```{r}
+# read in data
+lake_mono <- read_csv(here("data", "mono_lake_annual_levels.csv"), skip = 5) %>% 
+  clean_names()
+```
+
+```{r}
+# plot data for lake levels
+  ggplot(data = lake_mono, aes(x=year, y=lake_level_feet_above_sea_level))+ 
+  geom_line()+
+  scale_x_continuous(limits = c(1850, 2017),
+                     breaks = c(1850,1875,1900, 1925, 1950, 1975, 2000, 2017))+
+  labs(x= "Year", y= "Water Level (ft. Above Sea Level)",
+       title= "Change in Lake Mono Water Levels (Feet Above Sea Level)",
+       subtitle = "(1850-2017)")+
+  geom_hline(yintercept = 6377,
+             color= "cyan4",
+             size= 0.6)+
+  geom_text(aes(1875, 6377,
+                label= "Land Bridge Emerges (6,377 ft.)",
+                vjust= -0.5), size= 4)+
+   geom_hline(yintercept = 6377,
+             color= "cyan4",
+             size= 0.6)+
+  geom_text(aes(1875, 6377,
+                label= "Land Bridge Emerges (6,377 ft.)",
+                vjust= -0.5), size= 4)
+
+  
+
+```
+
+Lines to add: 3692 stable level salt concentrations, salty shrimp level
+
+1941- LA began diverting water 
+1976- first ecological study lake still supports abundant life (brine shrimp, birds)
+1983 - supreme court rules to protect Lake Mono as public trust
+1984 - streams begin to flow after water diversions ruled against
+1994- Decision 1631 set lake levels to 6392 ft
+1998- restoration plans for Mono basin streams to get to 6392 ft
+2013 - Mono basin stream restoration agreement submitted to state water board and signed
+2014- DWP still preventing stream restoration
+
+geom_h
