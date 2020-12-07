@@ -4,6 +4,7 @@ author: "Carly Norris"
 output: html_document
 ---
 
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 library(tidyverse)
@@ -30,8 +31,9 @@ survey_binary_party <- conservation_survey_simple %>%
   mutate(pol_align = case_when(pol_or <= 3 ~ "Conservative",
                                pol_or >= 5 ~ "Liberal"))
 ```
+---
 
-#### Table 1. Add table title.
+#### Table 1: Political alignment (conservative or liberal) vs. enivronmentalist self-identification (yes, no, unsure). Counts represented in parenthesis.
 
 ```{r}
 # table political alignment vs. environmental 
@@ -50,10 +52,9 @@ kbl(q1_proportions) %>%
     kable_material(full_width = F)
 ```
 
+```{r, include= FALSE}
+# Chi-squared test for variable independence between self-identification as an environmentalist and political alignment
 
-#### Chi-squared test for variable independence between self-identification as an environmentalist and political alignment.
-
-```{r}
 # convert data to contingency table
 q1_ct <- q1_counts %>% 
   column_to_rownames(var = "Political Alignment")
@@ -63,10 +64,11 @@ q1_x2 <- chisq.test(q1_ct)
 
 # convert to tidy data for in line referencing
 q1_tidy <- tidy(q1_x2)
+q1_x2
 ```
 
-In 2-3 sentences, using in-line referencing to the chi-square test results, describe the results of the statistical test and briefly highlight major takeaways that your reader should learn from your analysis (i.e., you should refer to the actual proportions here).
+There is a significant association between political alignment and environmentalist self-identification ($\chi$^2^(`r q1_tidy$parameter`) = `r  round(q1_tidy$statistic, 2)`, *p* = `r q1_tidy$p.value`), meaning there is a significant association between political alignment (binary affiliation as either conservative or liberal) and survey respondents self-identification as an environmentalist. `r q1_proportions[2,2]` of "liberal" survey respondents considered themselves environmentalists compared to `r q1_proportions[1,2]` of "conservatives." Conversely, `r q1_proportions[1,3]` of "conservatives" did not consider themselves environmentalists vs. `r q1_proportions[2,3]` of "liberals." `r q1_proportions[1,4]` of "conservatives" and `r q1_proportions[2,4]` of "liberals" were unsure if they were environmentalists. 
 
-
+---
 Citation: Andrews Forest LTER Site and C. Batavia. 2019. Influences on charitable giving for conservation: Online survey data of 1,331 respondents across the US, August 2017 ver 3. Environmental Data Initiative. https://doi.org/10.6073/pasta/926e6270e324a1322a900da14d38b96c
 
