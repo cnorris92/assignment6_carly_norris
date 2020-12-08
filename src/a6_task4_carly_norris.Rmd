@@ -1,27 +1,33 @@
 ---
-title: "Mono Lake Levels"
+title: "Mono Lake Levels (1850-2017)"
 author: "Carly Norris"
 output: html_document
 ---
 
+---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 library(tidyverse)
 library(here)
 library(janitor)
+library(dplyr)
 ```
 
 ```{r}
 # read in data
 lake_mono <- read_csv(here("data", "mono_lake_annual_levels.csv"), skip = 5) %>% 
   clean_names()
+
+# make new events data frame
+events_lake <- lake_mono %>% 
+  filter(year %in% c("1941", "1994"))
 ```
 
 ```{r}
 # plot data for lake levels
   ggplot(data = lake_mono, aes(x=year, y=lake_level_feet_above_sea_level))+ 
-  geom_line()+
+  geom_line(size= .8)+
   scale_x_continuous(limits = c(1850, 2017),
                      breaks = c(1850,1875,1900, 1925, 1950, 1975, 2000, 2017))+
   labs(x= "Year", y= "Water Level (ft. Above Sea Level)",
@@ -29,32 +35,34 @@ lake_mono <- read_csv(here("data", "mono_lake_annual_levels.csv"), skip = 5) %>%
        subtitle = "(1850-2017)")+
   geom_hline(yintercept = 6377,
              color= "cyan4",
-             size= 0.6)+
+             size= 0.8)+
   geom_text(aes(1875, 6377,
                 label= "Land Bridge Emerges (6,377 ft.)",
-                vjust= -0.5), size= 4)+
-   geom_hline(yintercept = 6377,
-             color= "cyan4",
-             size= 0.6)+
-  geom_text(aes(1875, 6377,
-                label= "Land Bridge Emerges (6,377 ft.)",
-                vjust= -0.5), size= 4)
+                vjust= -0.5))+
+   geom_hline(yintercept = 6392,
+             color= "darkorchid3",
+             size= 0.8)+
+  geom_text(aes(1875, 6392,
+                label= "Stable Lake Level (6,392 ft.)",
+                vjust= -0.5, hjust= 0.6))+
+  geom_point(data = events_lake, aes(x= year, y= lake_level_feet_above_sea_level),
+             size= 2.5,
+             color= "deeppink3") +
+  annotate("text", x=1941, y= 6417.0, label= "LA water diversions begin", vjust= -.5, hjust= -.1, size= 3)+
+  annotate("text", x= 1994, y= 6374.6, label= "Decision 1961", hjust = -.1, size=3)+
+  theme_light()
+  
 
   
 
 ```
-**Figure 1:** ADD CAPTION
+
+**Figure 1:** Changes in Lake Mono Water levels (ft. above sea level) from 1850-2017, with significant water levels and dates highlighted. In 1941, LA Department of Water & Power began diverting water to meet growing water demands, resulting in water levels dropping below ecologically stable levels such as land bridge emergence at 6,377 and high lake salinity. In 1994, Decision 1631 set the lake management level to 6,392 ft. to reduce salinity and maintain a balanced ecosystem. (Note: In order to visualize changes in water levels, the y-axis does not start at zero.)  
 
 
-Lines to add: 3692 stable level salt concentrations, salty shrimp level
+---
+Citations: 
 
-1941- LA began diverting water 
-1976- first ecological study lake still supports abundant life (brine shrimp, birds)
-1983 - supreme court rules to protect Lake Mono as public trust
-1984 - streams begin to flow after water diversions ruled against
-1994- Decision 1631 set lake levels to 6392 ft
-1998- restoration plans for Mono basin streams to get to 6392 ft
-2013 - Mono basin stream restoration agreement submitted to state water board and signed
-2014- DWP still preventing stream restoration
+1850-1912 from Stine, Scott (based on occasional observations and San Francisco precipitation). 1912-1979 from LADWP and USGS compilations. 1979-present from Los Angeles Aqueduct Daily Reports, and observations by the Mono Lake Committee. Compiled by the Mono Lake Committee.
 
-geom_h
+Saving Mono Lake. (2020, October 26). Retrieved December 08, 2020, from https://www.monolake.org/learn/aboutmonolake/savingmonolake/
