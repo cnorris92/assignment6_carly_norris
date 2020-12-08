@@ -33,22 +33,22 @@ events_lake <- lake_mono %>%
   labs(x= "Year", y= "Water Level (ft. Above Sea Level)",
        title= "Change in Lake Mono Water Levels (Feet Above Sea Level)",
        subtitle = "(1850-2017)")+
-  geom_hline(yintercept = 6377,
+  geom_hline(yintercept = 6377, # add line to indicate sig level
              color= "cyan4",
              size= 0.8)+
-  geom_text(aes(1875, 6377,
+  geom_text(aes(1875, 6377, # add label
                 label= "Land Bridge Emerges (6,377 ft.)",
                 vjust= -0.5))+
-   geom_hline(yintercept = 6392,
+   geom_hline(yintercept = 6392, # add lake management level
              color= "darkorchid3",
              size= 0.8)+
-  geom_text(aes(1875, 6392,
+  geom_text(aes(1875, 6392, # adding line label 
                 label= "Stable Lake Level (6,392 ft.)",
                 vjust= -0.5, hjust= 0.6))+
-  geom_point(data = events_lake, aes(x= year, y= lake_level_feet_above_sea_level),
+  geom_point(data = events_lake, aes(x= year, y= lake_level_feet_above_sea_level), # add event points 
              size= 2.5,
              color= "deeppink3") +
-  annotate("text", x=1941, y= 6417.0, label= "LA water diversions begin", vjust= -.5, hjust= -.1, size= 3)+
+  annotate("text", x=1941, y= 6417.0, label= "LA water diversions begin", vjust= -.5, hjust= -.1, size= 3)+ #label event points
   annotate("text", x= 1994, y= 6374.6, label= "Decision 1961", hjust = -.1, size=3)+
   theme_light()
   
